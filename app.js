@@ -5,6 +5,8 @@ const cameraView = document.querySelector("#camera--view"),
     cameraOutput = document.querySelector("#camera--output"),
     cameraSensor = document.querySelector("#camera--sensor"),
     cameraTrigger = document.querySelector("#camera--trigger")
+const  videoTrigger = document.querySelector("#camera--video")
+const  video = document.querySelector('#screenshot video');
 // Access the device camera and stream to cameraView
 function cameraStart() {
     navigator.mediaDevices
@@ -25,5 +27,15 @@ cameraTrigger.onclick = function() {
     cameraOutput.src = cameraSensor.toDataURL("image/webp");
     cameraOutput.classList.add("taken");
 };
+
+captureVideoButton.onclick = function() {
+    navigator.mediaDevices.getUserMedia(constraints).
+      then(handleSuccess).catch(handleError);
+};
+
+function handleSuccess(stream) {
+    cameraTrigger.disabled = false;
+    video.srcObject = stream;
+  }
 // Start the video stream when the window loads
 window.addEventListener("load", cameraStart, false);
